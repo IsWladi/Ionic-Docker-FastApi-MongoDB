@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mongo:5.0
+    restart: always
+    hostname: mongo_dev
+    container_name: mongo_db_dev
+    #mem_limit: 256m
+    #cpus: 1
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=myPass123
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - ionic_network
+  api:
+    container_name: api_ionic_tes
+    build: ./api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 80
+    volumes:
+      - ./api:/code/
+    ports:
+      - "9001:80"
+    depends_on:
+      - db
+    networks:
+      - ionic_network
+networks:
+  ionic_network:
+volumes:
+  mongodb:
+  mongodb_config:
