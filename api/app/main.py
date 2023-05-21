@@ -3,9 +3,17 @@ from fastapi import FastAPI
 from pymongo import MongoClient
 from bson import ObjectId
 from bson.json_util import dumps
+from fastapi.middleware.cors import CORSMiddleware
 import json
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permitir todos los orígenes, puedes ajustar esta lista según tus necesidades
+    allow_methods=["*"],  # Permitir todos los métodos HTTP
+    allow_headers=["*"],  # Permitir todas las cabeceras
+)
 
 # Configurar las credenciales de autenticación
 username = "admin"
