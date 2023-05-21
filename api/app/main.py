@@ -8,6 +8,7 @@ import json
 
 app = FastAPI()
 
+# Configurar CORS para permitir peticiones desde cualquier origen para pruebas
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Permitir todos los orígenes, puedes ajustar esta lista según tus necesidades
